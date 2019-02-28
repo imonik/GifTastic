@@ -19,6 +19,7 @@ $( document ).ready(function() {
 				
 				  for(var i=0; i<response.data.length; i++){
 				    var img = $('<img>');
+				    	img.addClass("mr-3 border rounded");
 						img.attr('src',  response.data[i].images.fixed_height_still.url);
 						img.attr("data-still", response.data[i].images.fixed_height_still.url);
 						img.attr("data-animate",  response.data[i].images.fixed_height.url);
@@ -44,7 +45,7 @@ $( document ).ready(function() {
 		// 	text: buttonName.toLocaleUpperCase(),
 		// 	id: 'btn_'+ buttonName,
 		// 	class: "btn btn-primary mr-2 animal",
-		// 	value:buttonName		 
+		// 	click:	ajaxCallGif	 
 		// });
 
 		return button;
