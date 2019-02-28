@@ -1,9 +1,11 @@
 var animalsArr = ["dog", "cat", "kitten", "hippo", "giraffe", "hedgehog", "duckling", "crocodile", "deer", "rabbit", "fox", "piglet", "panda", "baby seal", "racoon", "donkey" ];
-
+var gifs = $('#gifs');
+				
 
 $( document ).ready(function() {
 	
 	function ajaxCallGif(){
+		gifs.empty();;
 		if(this.value === undefined){
 			return;
 		}
@@ -22,7 +24,7 @@ $( document ).ready(function() {
 						img.attr("data-animate",  response.data[i].images.fixed_height.url);
 						img.attr("data-state", "still");
 						img.on('click', stateChange);
-				    $('#gifs').prepend(img);
+				    gifs.prepend(img);
 				  }
 				})
 	}
