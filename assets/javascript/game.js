@@ -3,9 +3,11 @@ var animalsArr = ["dog", "cat", "kitten", "hippo", "giraffe", "hedgehog", "duckl
 
 $( document ).ready(function() {
 	
-	function ajaxCallGif(criteria){
-		//var criteria = this.name;
-		console.log("aqi");
+	function ajaxCallGif(){
+		if(this.value === undefined){
+			return;
+		}
+		var criteria = this.value;
 
 		var queryURL = `http://api.giphy.com/v1/gifs/search?q=${criteria}&api_key=55SEk3CaBZsy7Hc52CPTyNDewZfDtf20`;
 		$.ajax({
@@ -15,14 +17,14 @@ $( document ).ready(function() {
 				
 				  for(var i=0; i<response.data.length; i++){
 				    var img = $('<img>');
-						img.attr('src', response.data[i].images.fixed_width.url);
-						img.attr("data-still", response.data[i].images.fixed_height_still);
-						img.attr("data-animate",  response.data[i].images.fixed_width.url);
+						img.attr('src',  response.data[i].images.fixed_height_still.url);
+						img.attr("data-still", response.data[i].images.fixed_height_still.url);
+						img.attr("data-animate",  response.data[i].images.fixed_height.url);
 						img.attr("data-state", "still");
-				    $('gifs').prepend(img);
+						img.on('click', stateChange);
+				    $('#gifs').prepend(img);
 				  }
 				})
-
 	}
 	function loadButtons(){
 		for(i = 0; i < animalsArr.length; i++) {
@@ -31,23 +33,21 @@ $( document ).ready(function() {
 	}
 
 	function createButton(buttonName){
-		var button //= `` "<button onclick='ajaxCallGif(\"" + buttonName + "\")' class='btn btn-primary mr-2' value='" +buttonName + "'> " +  buttonName.toLocaleUpperCase() + " </button>";
+		var button = $(`<button>${buttonName.toLocaleUpperCase()}</button>`);
+		button.attr("id", 'btn_'+ buttonName);
+		button.attr("value", buttonName);
+		button.addClass("btn btn-primary mr-2 animal");
+		button.on('click', ajaxCallGif);
+		// , {
+		// 	text: buttonName.toLocaleUpperCase(),
+		// 	id: 'btn_'+ buttonName,
+		// 	class: "btn btn-primary mr-2 animal",
+		// 	value:buttonName		 
+		// });
 
-
-
-		= $('<button>', {
-			text: buttonName.toLocaleUpperCase(),
-			id: 'btn_'+ buttonName,
-			class: "btn btn-primary mr-2 animal",
-			value:buttonName,
-			click: ajaxCallGif(buttonName)		 
-		});
-
-		console.log(button);
 		return button;
 	}
-
-
+	
 	loadButtons();
 
 	$("#btnAddAnimal").on("click", function(){
@@ -59,7 +59,7 @@ $( document ).ready(function() {
 			$("#txtAnimal").val("");
 	});
 
-	$("img").on("click", function(){
+	function stateChange(){
 		var dataStiil =$(this).attr("data-still");
 		var dataAnimate =$(this).attr("data-animate");
 		var dataState = $(this).attr("data-state");
@@ -72,9 +72,7 @@ $( document ).ready(function() {
 			 $(this).attr("src", dataStiil);
 			 $(this).attr("data-state", "still");
 		}
-	});
-
-
+	}
 
 });
 
