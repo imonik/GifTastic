@@ -11,7 +11,7 @@ $( document ).ready(function() {
 		}
 		var criteria = this.value;
 
-		var queryURL = `http://api.giphy.com/v1/gifs/search?q=${criteria}&api_key=55SEk3CaBZsy7Hc52CPTyNDewZfDtf20`;
+		var queryURL = `https://api.giphy.com/v1/gifs/search?q=${criteria}&api_key=55SEk3CaBZsy7Hc52CPTyNDewZfDtf20`;
 		$.ajax({
 				  url: queryURL,
 				  method: "GET"
